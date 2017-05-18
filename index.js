@@ -9,6 +9,10 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
+app.get('/*.pdf', function(request, response) {
+  response.download('public/res/' + request.url);
+});
+
 app.get('/*', function(request, response) {
   response.render('pages' + request.url);
 });
