@@ -17,6 +17,10 @@ app.get('/*.xlsx', function(request, response) {
   response.download('public/res/' + request.url);
 });
 
+app.get('/*.docx', function(request, response) {
+  response.download('public/res/' + request.url);
+});
+
 app.get('/*', function(request, response) {
   response.render('pages' + request.url);
 });
