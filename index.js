@@ -1,16 +1,34 @@
 var express = require('express');
 var app = express();
 
+var fs = require('fs');
+fs.writeFile("/tmp/test.ejs", "Hey there!", function(err) {
+    if(err) {
+        return console.log(err);
+    }
+
+    console.log("The file was saved!");
+}); 
+
 var AWS = require('aws-sdk')
 var s3 = new AWS.S3();
 var params = {
   Bucket: "lakecounty",
   MaxKeys: 10
 }
+var key
 s3.listObjects(params, function(err, data) {
-  if (err) console.log(err, err.stack);
-  else console.log(data.Contents.length);
+  if (err) {
+    console.log(err, err.stack);
+    return;
+  }
+  else {
+    key =data.Contents[0].Key;
+    console.log(key);
+  }
 });
+
+
 
 app.set('port', (process.env.PORT || 5000));
 
