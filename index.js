@@ -1,6 +1,17 @@
 var express = require('express');
 var app = express();
 
+var AWS = require('aws-sdk')
+var s3 = new AWS.S3();
+var params = {
+  Bucket: "lakecounty",
+  MaxKeys: 10
+}
+s3.listObjects(params, function(err, data) {
+  if (err) console.log(err, err.stack);
+  else console.log(data.Contents.length);
+});
+
 app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname + '/public'));
