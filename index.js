@@ -1,14 +1,8 @@
 var express = require('express');
 var app = express();
 
+  
 var fs = require('fs');
-fs.writeFile("/tmp/test.ejs", "Hey there!", function(err) {
-    if(err) {
-        return console.log(err);
-    }
-
-    console.log("The file was saved!");
-}); 
 
 var AWS = require('aws-sdk')
 var s3 = new AWS.S3();
@@ -17,6 +11,7 @@ var params = {
   MaxKeys: 10
 }
 var key
+//foo.txt\">foo</a>"
 s3.listObjects(params, function(err, data) {
   if (err) {
     console.log(err, err.stack);
@@ -25,6 +20,18 @@ s3.listObjects(params, function(err, data) {
   else {
     key =data.Contents[0].Key;
     console.log(key);
+    var data = "<a href=\"https://s3.us-east-2.amazonaws.com/lakecounty/"
+    data += key
+    data += "\">"
+    data += key
+    data += "</a>"
+    fs.writeFile("/tmp/files.ejs", data, function(err) {
+        if(err) {
+            return console.log(err);
+        }
+
+        console.log("The file was saved!");
+    }); 
   }
 });
 
