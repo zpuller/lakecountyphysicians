@@ -8,24 +8,33 @@ var AWS = require('aws-sdk')
 var s3 = new AWS.S3();
 var params = {
   Bucket: "lakecounty",
+  Prefix: "for_our_providers/",
   MaxKeys: 10
 }
 var key
-//foo.txt\">foo</a>"
 s3.listObjects(params, function(err, data) {
   if (err) {
     console.log(err, err.stack);
     return;
   }
   else {
-    key =data.Contents[0].Key;
-    console.log(key);
-    var data = "<a href=\"https://s3.us-east-2.amazonaws.com/lakecounty/"
-    data += key
-    data += "\">"
-    data += key
-    data += "</a>"
-    fs.writeFile("/tmp/files.ejs", data, function(err) {
+    var out = "<ul>"
+    for (var i = 0; i < data.Contents.length; ++i) {
+      key =data.Contents[i].Key;
+      var display_text = key.split("/")[1].replace(/_/g, " ")
+      if (display_text.length > 0) {
+        console.log(key);
+        var line = "<li><a href=\"https://s3.us-east-2.amazonaws.com/lakecounty/"
+        line += key
+        line += "\">"
+        line += display_text
+        line += "</a>"
+        line += "</li>"
+        out += line
+      }
+    }
+    out += "</ul>"
+    fs.writeFile("/tmp/lakecounty.ejs", out, function(err) {
         if(err) {
             return console.log(err);
         }
