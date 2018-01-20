@@ -15,7 +15,7 @@ function get_folder_contents(folder) {
   var params = {
     Bucket: "lakecounty",
     Prefix: folder + "/",
-    MaxKeys: 10
+    MaxKeys: 1000
   }
   var key
   s3.listObjects(params, function(err, data) {
@@ -51,6 +51,10 @@ function get_folder_contents(folder) {
 }
 get_folder_contents("about_our_providers")
 get_folder_contents("for_our_providers")
+get_folder_contents("utilization_management")
+get_folder_contents("quality_improvement")
+get_folder_contents("lcpa_events")
+get_folder_contents("lcpa_meeting_calendar")
 
 
 
