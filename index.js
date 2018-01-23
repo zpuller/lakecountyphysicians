@@ -49,13 +49,16 @@ function get_folder_contents(folder) {
     }
   });
 }
-get_folder_contents("about_our_providers")
-get_folder_contents("for_our_providers")
-get_folder_contents("utilization_management")
-get_folder_contents("quality_improvement")
-get_folder_contents("lcpa_events")
-get_folder_contents("lcpa_meeting_calendar")
 
+var interval_seconds = 30;
+setInterval(function(){
+  get_folder_contents("about_our_providers")
+  get_folder_contents("for_our_providers")
+  get_folder_contents("utilization_management")
+  get_folder_contents("quality_improvement")
+  get_folder_contents("lcpa_events")
+  get_folder_contents("lcpa_meeting_calendar")
+}, interval_seconds * 1000);
 
 
 app.set('port', (process.env.PORT || 5000));
