@@ -24,7 +24,7 @@ function get_folder_contents(folder) {
       return;
     }
     else {
-      var out = "<ul>"
+      var out = "<ul style=\"margin-left:150px;\">"
       for (var i = 0; i < data.Contents.length; ++i) {
         key =data.Contents[i].Key;
         var display_text = key.split("/")[1].replace(/_/g, " ")
