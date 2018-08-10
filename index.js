@@ -8,9 +8,6 @@ var AWS = require('aws-sdk')
 var s3 = new AWS.S3();
 
 
-
-
-
 function get_folder_contents(folder) {
   var params = {
     Bucket: "lakecounty",
@@ -50,14 +47,44 @@ function get_folder_contents(folder) {
   });
 }
 
-var interval_seconds = 30;
-setInterval(function(){
+function get_text_file(file) {
+  var params = {
+    Bucket: "lakecounty",
+    Key: "text/" + file,
+  }
+  s3.getObject(params, function(err, data) {
+    if (err) {
+      console.log(err, err.stack);
+    }
+    else {
+      var out = data.Body.toString('ascii');
+      fs.writeFile("/tmp/" + file + ".ejs", out, function(err) {
+          if(err) {
+              return console.log(err);
+          }
+
+          console.log("The text " + file  + " was saved!");
+      });
+    }
+  });
+}
+
+function get_all() {
   get_folder_contents("about_our_providers")
   get_folder_contents("for_our_providers")
   get_folder_contents("utilization_management")
   get_folder_contents("quality_improvement")
   get_folder_contents("lcpa_events")
   get_folder_contents("lcpa_meeting_calendar")
+
+  get_text_file("index_text")
+}
+
+get_all()
+
+var interval_seconds = 30;
+setInterval(function(){
+  get_all()
 }, interval_seconds * 1000);
 
 
