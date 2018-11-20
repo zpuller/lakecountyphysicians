@@ -78,6 +78,12 @@ function get_all() {
   get_folder_contents("lcpa_meeting_calendar")
 
   get_text_file("index_text")
+  get_text_file("about_text")
+  get_text_file("immediate_care_text")
+  get_text_file("contact_text")
+  get_text_file("providers_text")
+  get_text_file("plan_text")
+  get_text_file("staff_text")
 }
 
 get_all()
