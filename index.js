@@ -50,7 +50,7 @@ function get_folder_contents(folder) {
 function get_text_file(file) {
   var params = {
     Bucket: "lakecounty",
-    Key: "text/" + file,
+    Key: "text/" + file + ".txt",
   }
   s3.getObject(params, function(err, data) {
     if (err) {
